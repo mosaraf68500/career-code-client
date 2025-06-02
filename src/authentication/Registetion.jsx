@@ -1,8 +1,11 @@
-import React from "react";
+import React, { use } from "react";
 import registerLotties from "../assets/lotties/registerLottie.json";
 import Lottie from "lottie-react";
+import { AuthContex } from "../contex/AuthContex";
 
 const Registetion = () => {
+    const {createUser}=use(AuthContex);
+   
 
     const handeRegistetionForm=(e)=>{
         e.preventDefault();
@@ -10,6 +13,14 @@ const Registetion = () => {
         const email=form.email.value;
         const password=form.password.value;
         console.log(email,password)
+        // create use with email and password
+        createUser(email,password)
+        .then(result=>{
+            console.log(result.user)
+        })
+        .catch(error=>{
+            console.log(error)
+        })
     }
   return (
     <div>
@@ -20,7 +31,7 @@ const Registetion = () => {
           </div>
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
-              <h1 className="text-5xl font-bold">Registetion now!</h1>
+              <h1 className="text-4xl font-bold">Registetion now!</h1>
               <form onSubmit={handeRegistetionForm}>
                 <fieldset className="fieldset">
                   <label className="label">Email</label>
@@ -35,7 +46,7 @@ const Registetion = () => {
                   <div>
                     <a className="link link-hover">Forgot password?</a>
                   </div>
-                  <button className="btn btn-neutral mt-4">Login</button>
+                  <button className="btn btn-neutral mt-4">Register</button>
                 </fieldset>
               </form>
             </div>

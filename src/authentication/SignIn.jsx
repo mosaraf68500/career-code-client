@@ -5,7 +5,7 @@ import Lottie from "lottie-react";
 
 const SignIn = () => {
 
-    const {createUser}=use(AuthContex);
+    const {SingInUser}=use(AuthContex);
        
     
         const handleSignInForm=(e)=>{
@@ -14,8 +14,8 @@ const SignIn = () => {
             const email=form.email.value;
             const password=form.password.value;
             console.log(email,password)
-            // create use with email and password
-            createUser(email,password)
+            // signin
+            SingInUser(email,password)
             .then(result=>{
                 console.log(result.user)
             })

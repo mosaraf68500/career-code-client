@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { AuthContex } from './AuthContex';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase/firebase.config';
-// import { createUserWithEmailAndPassword } from 'firebase/auth/cordova';
+
 
 const AuthProvider = ({children}) => {
     const [loading,setLoading]=useState(true)
@@ -14,9 +14,17 @@ const AuthProvider = ({children}) => {
         return createUserWithEmailAndPassword(auth,email,password);
     }
 
+    // signIn
+    const SingInUser=(email,password)=>{
+        setLoading(true)
+        return signInWithEmailAndPassword(auth,email,password);
+
+    }
+
     const AuthInfo={
         loading,
         createUser,
+        SingInUser
 
     }
     return (

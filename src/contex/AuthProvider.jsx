@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AuthContex } from './AuthContex';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '../firebase/firebase.config';
 
 
 const AuthProvider = ({children}) => {
     const [loading,setLoading]=useState(true)
+    const [user,setUser]=useState(null);
 
     // createuser
 
@@ -21,8 +22,24 @@ const AuthProvider = ({children}) => {
 
     }
 
+    const signOutUser=()=>{
+        setLoading(true)
+        return signOut(auth)
+    }
+
+    useEffect(()=>{
+        const unsubscribe=onAuthStateChanged(auth,currentUser=>{
+            setUser(currentUser);
+            setLoading(false);
+            console.log('current user in state',currentUser)
+        })
+        return ()=>unsubscribe();
+    },[])
+
     const AuthInfo={
         loading,
+        user,
+        signOutUser,
         createUser,
         SingInUser
 

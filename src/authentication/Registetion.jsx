@@ -2,6 +2,7 @@ import React, { use } from "react";
 import registerLotties from "../assets/lotties/registerLottie.json";
 import Lottie from "lottie-react";
 import { AuthContex } from "../contex/AuthContex";
+import SocialLogin from "../shaared/SocialLogin";
 
 const Registetion = () => {
     const {createUser}=use(AuthContex);
@@ -32,6 +33,8 @@ const Registetion = () => {
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
               <h1 className="text-4xl font-bold">Registetion now!</h1>
+
+              <SocialLogin></SocialLogin>
               <form onSubmit={handeRegistetionForm}>
                 <fieldset className="fieldset">
                   <label className="label">Email</label>

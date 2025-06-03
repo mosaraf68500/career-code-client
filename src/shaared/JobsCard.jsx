@@ -119,7 +119,7 @@ const JobsCard = ({ job }) => {
             {showDetails ? "See Less" : "See More"}
           </button>
           <div className="card-actions">
-          <Link to={`/jobs/${_id}`}><button className="btn btn-primary mt-3 ">Apply Now</button> </Link>
+          <Link to={`/jobs/${_id}`}><button className="btn btn-primary mt-3 ">jobs details </button> </Link>
         </div>
         </div>
         

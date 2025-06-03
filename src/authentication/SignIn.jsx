@@ -2,10 +2,15 @@ import React, { use } from "react";
 import { AuthContex } from "../contex/AuthContex";
 import loginLottie from "../assets/lotties/login.json"
 import Lottie from "lottie-react";
+import { useLocation, useNavigate } from "react-router";
+import SocialLogin from "../shaared/SocialLogin";
 
 const SignIn = () => {
 
     const {SingInUser}=use(AuthContex);
+    const navigate=useNavigate();
+    const loaction=useLocation();
+    const from=loaction.state || '/'
        
     
         const handleSignInForm=(e)=>{
@@ -18,6 +23,7 @@ const SignIn = () => {
             SingInUser(email,password)
             .then(result=>{
                 console.log(result.user)
+                navigate(from)
             })
             .catch(error=>{
                 console.log(error)
@@ -33,6 +39,7 @@ const SignIn = () => {
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
             <div className="card-body">
               <h1 className="text-4xl font-bold text-center">SignIn now!</h1>
+              <SocialLogin from={from}></SocialLogin>
               <form onSubmit={handleSignInForm}>
                 <fieldset className="fieldset">
                   <label className="label">Email</label>

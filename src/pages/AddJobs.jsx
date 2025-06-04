@@ -1,10 +1,19 @@
 import React from "react";
 
 const AddJobs = () => {
+
+    const handleSubmitFormData = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form); // ছোট h ক্যামেলকেস ব্যবহার করবো
+    const data = Object.fromEntries(formData.entries());
+    console.log(data);
+};
+
   return (
     <div className="flex flex-col justify-center items-center my-10">
       <h1 className="text-4xl text-center font-bold">Please add a job</h1>
-      <form>
+      <form onSubmit={handleSubmitFormData}>
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
           <legend className="fieldset-legend">basic info</legend>
           <label className="label"> Job Title</label>
@@ -103,76 +112,85 @@ const AddJobs = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 justify-between gap-4">
             <div>
-            <label className="label">Max salary</label>
-          <input
-            type="text"
-            name="salaryMax"
-            className="input"
-            placeholder="Maximum salary"
-          />
-          </div>
+              <label className="label">Max salary</label>
+              <input
+                type="text"
+                name="salaryMax"
+                className="input"
+                placeholder="Maximum salary"
+              />
+            </div>
 
-          <div>
-            <label className="label">Min salary</label>
-          <input
-            type="text"
-            name="salaryMin"
-            className="input"
-            placeholder="Minimum salary"
-          />
-          </div>
+            <div>
+              <label className="label">Min salary</label>
+              <input
+                type="text"
+                name="salaryMin"
+                className="input"
+                placeholder="Minimum salary"
+              />
+            </div>
 
-          <div>
-            <label className="label">Currentcy</label>
-          <select
-            name="currentcy"
-            defaultValue="currentcy"
-            className="select"
-          >
-            <option disabled={true}>currentcy</option>
-            <option>BDT</option>
-            <option>US</option>
-            <option>UE</option>
-          </select>
+            <div>
+              <label className="label">Currentcy</label>
+              <select
+                name="currentcy"
+                defaultValue="currentcy"
+                className="select"
+              >
+                <option disabled={true}>currentcy</option>
+                <option>BDT</option>
+                <option>US</option>
+                <option>UE</option>
+              </select>
+            </div>
           </div>
-          </div>
+        </fieldset>
+
+        {/* description */}
+
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <label className="label">description</label>
+          <textarea
+            className="textarea"
+            name="description"
+            placeholder="Bio"
+          ></textarea>
+        </fieldset>
+
+        {/* job requrement */}
+
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          \<label className="label">requirement</label>
+          <textarea
+            className="textarea"
+            name="requirement"
+            placeholder="requirement separet by a comma"
+          ></textarea>{" "}
+        </fieldset>
+
+        {/* job responsibility */}
+
+        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
+          <label className="label">responsibility</label>
+          <textarea
+            className="textarea"
+            name="responsibility"
+            placeholder="responsibility separet by a comma"
+          ></textarea>{" "}
         </fieldset>
 
         {/* job type */}
 
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-          <legend className="fieldset-legend py-4">job type</legend>
+         
 
-          <label className="label">Title</label>
-          <input type="text" className="input" placeholder="My awesome page" />
+          <label className="label">hr_email</label>
+          <input type="email" className="input" placeholder="hr_email" />
+          <label className="label">hr_name</label>
+          <input type="text" className="input" placeholder="hr_name" />
         </fieldset>
-
-        {/* job type */}
-
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-          <legend className="fieldset-legend py-4">job type</legend>
-
-          <label className="label">Title</label>
-          <input type="text" className="input" placeholder="My awesome page" />
-        </fieldset>
-
-        {/* job type */}
-
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-          <legend className="fieldset-legend py-4">job type</legend>
-
-          <label className="label">Title</label>
-          <input type="text" className="input" placeholder="My awesome page" />
-        </fieldset>
-
-        {/* job type */}
-
-        <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-          <legend className="fieldset-legend py-4">job type</legend>
-
-          <label className="label">Title</label>
-          <input type="text" className="input" placeholder="My awesome page" />
-        </fieldset>
+        <input type="submit" className="btn btn-accent" value="add a job" />
       </form>
     </div>
   );

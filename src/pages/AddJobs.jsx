@@ -1,13 +1,27 @@
-import React from "react";
+import React, { use } from "react";
+import { AuthContex } from "../contex/AuthContex";
 
 const AddJobs = () => {
+    const {user}=use(AuthContex);
 
     const handleSubmitFormData = (e) => {
     e.preventDefault();
     const form = e.target;
-    const formData = new FormData(form); // ছোট h ক্যামেলকেস ব্যবহার করবো
+    const formData = new FormData(form); 
     const data = Object.fromEntries(formData.entries());
-    console.log(data);
+    const {salaryMax,salaryMin,currentcy, ...newJob}=data;
+    // process salary range
+    newJob.salaryRang={
+       Max: salaryMax,Min:salaryMin,Currency:currentcy
+    }
+
+
+    // process requiremant 
+
+    newJob.requirement=newJob.requirement.split(',').map(req=>req.trim());
+    // process responsibilitys
+    newJob.responsibility=newJob.responsibility.split(',').map(res=>res.trim());
+    console.log(newJob);
 };
 
   return (
@@ -66,18 +80,21 @@ const AddJobs = () => {
               type="radio"
               name="jobType"
               aria-label="On-Site"
+              value="On-site"
             />
             <input
               className="btn"
               type="radio"
               name="jobType"
               aria-label="Remote"
+              value="Remote"
             />
             <input
               className="btn"
               type="radio"
               name="jobType"
               aria-label="Hybride"
+              value="Hybride"
             />
           </div>
         </fieldset>
@@ -186,9 +203,9 @@ const AddJobs = () => {
          
 
           <label className="label">hr_email</label>
-          <input type="email" className="input" placeholder="hr_email" />
+          <input type="email" className="input" defaultValue={user.email} placeholder="hr_email" />
           <label className="label">hr_name</label>
-          <input type="text" className="input" placeholder="hr_name" />
+          <input type="text" className="input"  placeholder="hr_name" />
         </fieldset>
         <input type="submit" className="btn btn-accent" value="add a job" />
       </form>

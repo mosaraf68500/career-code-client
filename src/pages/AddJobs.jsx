@@ -1,28 +1,53 @@
 import React, { use } from "react";
 import { AuthContex } from "../contex/AuthContex";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const AddJobs = () => {
-    const {user}=use(AuthContex);
+  const { user } = use(AuthContex);
 
-    const handleSubmitFormData = (e) => {
+  const handleSubmitFormData = (e) => {
     e.preventDefault();
     const form = e.target;
-    const formData = new FormData(form); 
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
-    const {salaryMax,salaryMin,currentcy, ...newJob}=data;
+    const { salaryMax, salaryMin, currentcy, ...newJob } = data;
     // process salary range
-    newJob.salaryRang={
-       Max: salaryMax,Min:salaryMin,Currency:currentcy
-    }
+    newJob.salaryRang = {
+      Max: salaryMax,
+      Min: salaryMin,
+      Currency: currentcy,
+    };
 
+    // process requiremant
 
-    // process requiremant 
-
-    newJob.requirement=newJob.requirement.split(',').map(req=>req.trim());
+    newJob.requirement = newJob.requirement.split(",").map((req) => req.trim());
     // process responsibilitys
-    newJob.responsibility=newJob.responsibility.split(',').map(res=>res.trim());
-    console.log(newJob);
-};
+    newJob.responsibility = newJob.responsibility
+      .split(",")
+      .map((res) => res.trim());
+
+    newJob.staus = "active";
+    // save database in object
+
+    axios
+      .post("http://localhost:3000/jobs", newJob)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your work has been saved",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="flex flex-col justify-center items-center my-10">
@@ -119,7 +144,7 @@ const AddJobs = () => {
 
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
           <label className="label">application dateline</label>
-          <input type="date" className="input" />
+          <input type="date" className="input" name="dateline" />
         </fieldset>
 
         {/* job salary range */}
@@ -200,12 +225,15 @@ const AddJobs = () => {
         {/* job type */}
 
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
-         
-
           <label className="label">hr_email</label>
-          <input type="email" className="input" defaultValue={user.email} placeholder="hr_email" />
+          <input
+            type="email"
+            className="input"
+            defaultValue={user.email}
+            placeholder="hr_email"
+          />
           <label className="label">hr_name</label>
-          <input type="text" className="input"  placeholder="hr_name" />
+          <input type="text" className="input" placeholder="hr_name" />
         </fieldset>
         <input type="submit" className="btn btn-accent" value="add a job" />
       </form>
